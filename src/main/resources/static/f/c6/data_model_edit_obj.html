@@ -1,0 +1,31 @@
+<div class="w3-border w3-border-green w3-leftbar"
+	data-ng-if="ctrl.data_model_edit_obj.doc_id==d.doc_id && ctrl.choice_data_model_obj.doc_id==d.doc_id">
+	<div class="w3-right w3-green w3-tiny">
+		&nbsp; 
+		 <i class="fas fa-edit"></i>
+		Редагувати
+	</div>
+	<div class="w3-border-bottom w3-tiny">
+		&nbsp; <span class="w3-btn w3-padding-small"
+			data-ng-class="{'w3-green':ctrl.is_data_model_edit_part_name_actual('s1value')}"
+			data-ng-click="ctrl.click_data_model_edit_part_name='s1value'"> <i
+			class="fas fa-ad"></i>
+		</span> <span class="w3-btn w3-padding-small"
+			data-ng-class="{'w3-green':ctrl.is_data_model_edit_part_name_actual('i18n')}"
+			data-ng-click="ctrl.click_data_model_edit_part_name='i18n'"> <i
+			class="fas fa-edit"></i> <i class="fas fa-globe"></i>
+		</span> <span title="Cancel" class="w3-btn w3-padding-small"
+			data-ng-click="ctrl.click_data_model_edit_obj(el)"> Скасувати </span>
+	</div>
+
+	<div class="w3-container" on="ctrl.click_data_model_edit_part_name"
+		data-ng-switch>
+		<div data-ng-switch-when="s1value">
+			<div data-ng-include="'/f/c6/data_model_edit_obj_name.html'"></div>
+		</div>
+		<div ng-switch-when="i18n">
+			<div data-ng-include="'/f/c6/data_model_edit_obj_i18n.html'"></div>
+		</div>
+		<div ng-switch-default>not defined</div>
+	</div>
+</div>

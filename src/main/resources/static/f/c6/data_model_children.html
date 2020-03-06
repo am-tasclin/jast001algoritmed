@@ -1,0 +1,154 @@
+<div data-ng-repeat="d in children" data-ng-init="el=d">
+	<div
+		data-ng-class="{'w3-border w3-border-green':d.doc_id==ctrl.choice_data_model_obj.doc_id}">
+		<span class="w3-tiny w3-dropdown-hover w3-hover-shadow w3-white"
+			data-ng-class="{'w3-green':ctrl.choice_data_model_obj.doc_id==d.doc_id}">
+			<span data-ng-if="!d.children">☰</span> <span data-ng-if="d.children">
+				<i class="fas fa-ellipsis-h"
+				data-ng-if="d.children && !d.children_close"></i> <span
+				data-ng-if="d.children && d.children_close"> <i
+					class="fas fa-ellipsis-v"></i>&nbsp;&nbsp;
+			</span>
+		</span> 
+		<i class="fas fa-edit w3-text-blue"
+			data-ng-if="ctrl.content_menu.subSepMenuName.indexOf(el.doc_id)>=0"></i>
+			
+			<span
+			data-ng-class="{'w3-pale-yellow':ctrl.content_menu.copyObject.doc_id==el.doc_id}"
+			>
+			[{{d.doc_id}}]
+			</span>
+			
+			<span data-ng-include="'/f/c6/doctype_short.html'"></span>
+			<div class="w3-dropdown-content w3-card-4" style="width: 180px">
+				<div>
+					<a href="#" ng-click="ctrl.content_menu.upElement(el)"
+						title="догори" class="w13-bar-item w3-button"><i
+						class="fas fa-caret-up"></i></a> <a href="#"
+						ng-click="ctrl.content_menu.downElement(el)" title="донизу"
+						class="w13-bar-item w3-button"><i class="fas fa-caret-down"></i></a>
+					| <a href="#" ng-click="ctrl.content_menu.addElement(el)"
+						title="Додати запис" class="w3-button"><i class="fa fa-plus"></i></a>
+					<a href="#" ng-click="ctrl.content_menu.minusElement(el)"
+						title="Видалити запис" class="w3-button"><i
+						class="fa fa-minus"></i></a>
+				</div>
+				<div class="w3-border-top">
+					<i class="fas fa-edit w3-text-blue w3-btn"
+						data-ng-click="ctrl.content_menu.subSepMenuName = null"></i>
+					<i class="fas fa-ad w3-btn" title="Редагувати назву поля"
+						data-ng-click="ctrl.content_menu.typeElement('name',el)"></i>
+					<i class="fas fa-globe w3-btn" title="Редагувати переклад"
+						data-ng-click="ctrl.content_menu.typeElement('i18n',el)"></i>
+					<span> <i class="fas fa-hashtag w3-btn"
+						data-ng-click="ctrl.content_menu.typeElement('type',el);ctrl.initTypesList();"
+						title="Тип вузла"></i>
+						<div class="w3-dropdown-content w3-card-4 w3-container w3-leftbar"
+							data-ng-if="ctrl.content_menu.subSepMenuName.indexOf(el.doc_id)>=0 && 
+							!(ctrl.content_menu.subSepMenuName.indexOf('paste_')==0)
+							">
+							<div
+								data-ng-if="ctrl.content_menu.subSepMenuName.indexOf('name_')==0">
+								<i class="fas fa-ad"></i>
+								<div data-ng-include="'/f/c6/data_model_edit_obj_name.html'"></div>
+							</div>
+							<div
+								data-ng-if="ctrl.content_menu.subSepMenuName.indexOf('i18n_')==0">
+								<i class="fas fa-globe"></i>
+								<div data-ng-include="'/f/c6/data_model_edit_obj_i18n.html'"></div>
+							</div>
+							<div
+								data-ng-if="ctrl.content_menu.subSepMenuName.indexOf('type_')==0">
+								<i class="fas fa-hashtag"></i>
+								{{ctrl.content_menu.subSepMenuName}}
+								{{el.doctype}}
+								<div data-ng-repeat="typEl in ctrl.typeList"
+									data-ng-click="ctrl.content_menu.setTypeElement(typEl, el)"
+									data-ng-class="{'w3-yellow':typEl.doctype_id==el.doctype||typEl.doctype2_id==el.doctype}"
+									class="w3-hover-shadow">
+									<span data-ng-if="typEl.doctype2_id">
+										{{typEl.doctype2_id}}.</span>{{typEl.doctype_id}} : {{typEl.doctype}}<span
+										data-ng-if="typEl.doctype2_id">.{{typEl.doctype2}}</span>
+								</div>
+							</div>
+							<br/>
+						</div>
+					</span>
+				</div>
+				<div class="w3-border-top">
+					<a href="#" ng-click="ctrl.content_menu.copyElement(el)"
+						title="копія" class="w13-bar-item w3-button"><i
+						class="fa fa-copy"></i></a> <a href="#"
+						ng-click="ctrl.content_menu.cutElement(el)" title="вирізка"
+						class="w13-bar-item w3-button"><i class="fa fa-cut"></i></a> <a
+						href="#" ng-click="ctrl.content_menu.pasteElement(el)"
+						title="вставка" class="w13-bar-item w3-button"><i
+						class="fa fa-paste"></i></a>
+					<div class="w3-dropdown-content w3-card-4 w13-container w3-leftbar"
+						s1tyle="width: 190px"
+						data-ng-if="ctrl.content_menu.subSepMenuName.indexOf(el.doc_id)>=0 && 
+							ctrl.content_menu.subSepMenuName.indexOf('paste_')==0
+							">
+						<div>
+							<span class="w3-btn"
+								data-ng-click="ctrl.content_menu.pasteElementContent(el)"
+								title="вставка - Копії елемента"> &nbsp; <i
+								class="fa fa-paste"></i>
+							</span> {{ctrl.content_menu.copyObject.doc_id}}
+							({{ctrl.content_menu.copyObject.countWithChildren}})
+						</div>
+						<div>
+							<span class="w3-btn"
+								data-ng-click="ctrl.content_menu.pasteElementReference1(el)"
+								title="вставка - Посилання 1 на елемент">1 <i
+								class="fas fa-share"></i>
+							</span>
+						</div>
+						<div>
+							<span class="w3-btn"
+								data-ng-click="ctrl.content_menu.pasteElementReference2(el)"
+								title="вставка - Посилання 2 на елемент">2 <i
+								class="fas fa-share"></i>
+							</span> <span data-ng-if="el.reference2">
+								{{'{'+d.reference2+'}'}} <i class="fas fa-eraser w3-btn"
+								title="зтерти"
+								data-ng-click="ctrl.content_menu.deleteElementReference2(el)"></i>
+							</span>
+						</div>
+						<div>
+							<span class="w3-btn"
+								data-ng-click="ctrl.content_menu.pasteElementChildContent(el)"
+								title="перенесення - Вкладеного Елемента "> <i
+								class="fas fa-project-diagram"></i> <i class="fa fa-paste"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</span> <a class="w3-hover-shadow" href="#"
+			data-ng-click="ctrl.select_tree_item(d)"><span
+			data-ng-if="d.i1value"> {{d.i1value}}.</span> {{d.s1value }} <span
+			data-ng-if="d.i18n"> : {{d.i18n}} </span> <span
+			data-ng-if="!d.s1value && !d.i18n && !d.reference"> -- ? -- </span> <span
+			class="w3-tiny" data-ng-if="d.reference">
+			{{d.r1value}}:{{d.reference}} </span> </a> <span
+			data-ng-if="d.reference2" class="w3-tiny">
+			{{'{'+d.reference2+'}'}} </span> <sup
+			data-ng-if="d.children && d.children_close" class="w3-tiny am-b">[{{d.children.length}}]</sup>
+		<span
+			data-ng-if="ctrl.doc_data_shortView['_'+ctrl.choice_data_model.doc_id].includes(d.doc_id)">
+			<i class="fas fa-check"></i>
+		</span> <span data-ng-if="d.doc_id==ctrl.choice_data_model_obj.doc_id"
+			class="w3-right w3-green">&nbsp; <a href="#"
+			data-ng-click="ctrl.click_data_model_edit_obj(el)"><i
+				class="fas fa-edit"></i> </a>
+		</span>
+		<div data-ng-include="'/f/c6/data_model_edit_obj.html'"></div>
+	</div>
+	<div data-ng-if="d.children && !d.children_close"
+		class="w3-border-left w3-container">
+		<div data-ng-repeat="children in [d.children]"
+			data-ng-include="'/f/c6/data_model_children.html'"></div>
+	</div>
+</div>

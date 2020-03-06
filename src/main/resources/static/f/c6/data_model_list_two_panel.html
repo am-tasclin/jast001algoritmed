@@ -1,0 +1,27 @@
+<div>
+	<div class="w3-border-bottom">
+		ids: {{ctrl.two_docs_ids.toString()}} <a target="_blank"
+			class="w3-border w3-border-green w3-leftbar w3-hover-shadow"
+			data-ng-if="ctrl.two_docs_ids[1]>2"
+			href="eh002.html?doc2doc={{ctrl.two_docs_ids.toString()}}">
+			&nbsp; <i class="fas fa-link"></i> eh002 &nbsp;
+		</a> <i class="fas fa-sync w3-btn"
+			data-ng-click="ctrl.content_menu.reRead()"></i>
+	</div>
+	<div class="w3-row w3-small">
+		<div class="w3-half ">
+			<div data-ng-repeat=" d in ctrl.docs" class="w3-hover-shadow"
+				data-ng-class="{'w3-green':ctrl.two_docs_ids[0]==d.doc_id}"
+				data-ng-click="ctrl.two_docs_ids[0]=d.doc_id">
+				<span class="w3-tiny">{{d.doc_id}}</span> {{d.s1value}}
+			</div>
+		</div>
+		<div class="w3-half w3-border-left w3-container">
+			<div data-ng-repeat=" d in ctrl.docs" class="w3-hover-shadow"
+				data-ng-class="{'w3-green':ctrl.two_docs_ids[1]==d.doc_id}"
+				data-ng-click="ctrl.two_docs_ids[1]=d.doc_id">
+				<span class="w3-tiny">{{d.doc_id}}</span> {{d.s1value}}
+			</div>
+		</div>
+	</div>
+</div>

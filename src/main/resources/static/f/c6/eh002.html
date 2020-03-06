@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp" data-ng-controller="AppCtrl as ctrl"
+	lang="uk-UA">
+<head>
+<meta charset="utf-8" />
+<title>{{ctrl.page_title}}</title>
+<link rel="stylesheet"
+	href="/webjars/font-awesome/5.12.0/css/all.min.css">
+<link rel="stylesheet" href="/f/css/w3.css">
+<link rel="stylesheet" href="/f/css/am.css">
+<link rel="shortcut icon" href="/f/img/algoritmed.ico"
+	type="image/x-icon">
+<script src="/webjars/angularjs/1.7.9/angular.min.js"></script>
+<script src="/webjars/angularjs/1.7.9/i18n/angular-locale_uk-ua.js"></script>
+<script src="/webjars/angularjs/1.7.9/angular-sanitize.min.js"></script>
+<script src="/f/js/app003.js"></script>
+<script src="/f/js/crud001.js"></script>
+<script src="/f/c6/eh002.js"></script>
+</head>
+<body data-ng-click="ctrl.bodyClick()">
+	<div class="w3-container am-max-width-1">
+		<div class="w3-border-bottom">
+			<div class="w3-right" data-ng-include="'/f/btn-to-login.html'"></div>
+			<span data-ng-repeat="cnf in [{show_title:'no'}]"
+				data-ng-include="'/f/home-link.html'" class="w3-small0 am-b"></span>
+			<span data-ng-click="$event.stopPropagation()"
+				data-ng-include="'/f/c6/data_model_list_menu.html'"></span> <span
+				class="am-b"> &nbsp; {{ctrl.page_title}} </span> || <span
+				class="w3-tiny"> <span
+				data-ng-repeat="df in [ctrl.doc2doc_fd['_'+ctrl.doc2doc_ids[0]]]"
+				data-ng-include="'/f/c6/doc-folder.html'"> </span> | <span
+				data-ng-repeat="df in [ctrl.doc2doc_fd['_'+ctrl.doc2doc_ids[1]]]"
+				data-ng-include="'/f/c6/doc-folder.html'"> </span>
+			</span>
+		</div>
+		<div class="w3-row">
+			<div class="w3-half w3-border-right">
+				<div class="w3-tiny am-b">
+					{{ctrl.elementsMap[ctrl.doc2doc_ids[0]].s1value}}:
+					{{ctrl.elementsMap[ctrl.doc2doc_ids[0]].i18n}}</div>
+				<div
+					data-ng-repeat="edEl in [ctrl.elementsMap[ctrl.doc2doc_ids[0]]] "
+					data-ng-include="'/f/c6/data_model.html'"></div>
+			</div>
+			<div class="w3-half ">
+				<div class="w3-tiny am-b w3-container">
+					{{ctrl.elementsMap[ctrl.doc2doc_ids[1]].s1value}}:
+					{{ctrl.elementsMap[ctrl.doc2doc_ids[1]].i18n}}</div>
+				<div
+					data-ng-repeat="edEl in [ctrl.elementsMap[ctrl.doc2doc_ids[1]]] "
+					data-ng-include="'/f/c6/data_model.html'"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

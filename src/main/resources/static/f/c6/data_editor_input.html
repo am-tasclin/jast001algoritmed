@@ -1,0 +1,130 @@
+<div data-ng-repeat="d in c.dt.children">
+	<div class="w3-display-container"
+		data-ng-repeat="v in [{obj_with_child:d.doctype==18 && d.cnt_child && !ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]] }]">
+		<div
+			data-ng-if="v.obj_with_child || (d.doctype>31 && !ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]])">
+			<div class="w3-hover-shadow"
+				data-ng-click="ctrl.insert_reference_node2(d, c)">
+				Додати: <span data-ng-include="'/f/c6/data_type_name.html'"></span>
+			</div>
+		</div>
+		<div>
+			<span data-ng-include="'/f/c6/data_type_name.html'"></span> <span
+				class="w3-tiny"> <sub data-ng-if="da.doc_id">({{da.doc_id}})</sub>
+			</span>
+		</div>
+		<div class="w3-tiny w3-display-topright" data-ng-if="d.cnt_child>0">
+			<span class="w3-btn w3-padding-small"
+				data-ng-click="d.close=!d.close"> <span data-ng-if="d.close">
+					{{d.cnt_child}} <i class="fas fa-window-maximize "></i>
+			</span> <i data-ng-if="!d.close" class="far fa-window-maximize "></i>
+			</span>
+		</div>
+		<div class="w3-tiny w3-display-topright" data-ng-if="d.doctype>31">
+			<i class="w3-btn w3-padding-small w3-small far fa-plus-square"
+				data-ng-click="ctrl.insert_list_element(d, c)"></i>  <i class="w3-btn w3-padding-small fa-window-maximize far"></i>
+		</div>
+	</div>
+	<div data-ng-switch="d.doctype"
+		data-ng-class="{'w3-border w3-border-red':ctrl.data_input_valid['_'+d.doc_id] && !ctrl.data_input_valid['_'+d.doc_id]()}">
+		<div data-ng-switch-when="22">
+			<textarea rows="1" class="w3-border am-width-100pr"
+				data-ng-focus="ctrl.insert_reference_node2(d, c)"
+				data-ng-blur="ctrl.update_data(ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]])"
+				data-ng-model="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].s1value"></textarea>
+		</div>
+		<div data-ng-switch-when="26">
+			Дата <input type="date" class="w3-border"
+				value="{{ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].dt1value}}"
+				data-ng-focus="ctrl.insert_reference_node2(d, c)"
+				data-ng-blur="ctrl.update_data_date(ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]])"
+				data-ng-model="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].s1value">
+		</div>
+		<div data-ng-switch-when="23">
+			<input class="w3-border am-width-100pr"
+				data-ng-focus="ctrl.insert_reference_node2(d, c)"
+				data-ng-model="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].s1value">
+		</div>
+		<div data-ng-switch-when="32" class="w3-container w3-border-left"
+			data-ng-if="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].children">
+			<span class="w3-tiny w3-dropdown-hover"> <i
+				class="fas fa-bars w3-btn w3-padding-small"></i>
+				<div class="w3-dropdown-content w3-card">
+					<a class="w3-button" 
+					data-ng-click="ctrl.delete_empty_list_element(ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]])">
+						<i class="fas fa-trash "></i> Видалити пусті
+					</a>
+				</div>
+			</span>
+			<div
+				data-ng-repeat="d3 in ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].children"
+				data-ng-if="d3.doc_id">
+				<input class="w3-border am-width-100pr"
+					data-ng-blur="ctrl.update_data(d3)" data-ng-model="d3.s1value">
+			</div>
+		</div>
+		<div data-ng-switch-when="37" class="w3-container w3-border-left"
+			data-ng-if="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].children">
+			<div
+				data-ng-repeat="d3 in ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].children"
+				data-ng-if="d3.doc_id">
+				<div class="w3-tiny w3-hover-shadow">
+					<div class="w3-right w3-btn w3-padding-small"
+						data-ng-click="ctrl.delete_object('Видалити данні?', d3)">
+						<i class="fas fa-eraser"></i>
+					</div>
+					{{d3.doc_id}}
+				</div>
+				<div class="w3-container w3-border-left"
+					data-ng-repeat="c1 in [ctrl.elementsMap[ctrl.elementsMap[d3.reference].reference]]">
+					<div data-ng-repeat="c in [{dt:{children:c1}, data_id:d3.doc_id}]"
+						data-ng-include="'/f/c6/data_editor_input.html'"></div>
+				</div>
+			</div>
+		</div>
+		<div data-ng-switch-default>
+			<div data-ng-if="d.reference && ctrl.menu_list_count[d.reference]>0">
+				<div data-ng-if="ctrl.menu_list_count[d.reference]<20">
+					<select class="w3-border am-width-100pr"
+						data-ng-focus="ctrl.insert_reference_node2(d, c)"
+						data-ng-change="ctrl.update_reference2(ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]])"
+						data-ng-model="ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].reference2"
+						data-ng-options="item.doc_id as (item.i18n) for item in ctrl.elementsMap[d.reference]">
+						<option value="">-- пусто --</option>
+					</select>
+				</div>
+			</div>
+			<div data-ng-if="!d.reference && false">
+				<sub class="w3-tiny"> -TODO- </sub>
+				<textarea rows="1" class="w3-border am-width-100pr"
+					data-ng-focus="ctrl.insert_reference_node2(d, c)"
+					data-ng-blur="ctrl.update_data(da)" data-ng-model="da.s1value"></textarea>
+			</div>
+		</div>
+		<div data-ng-show="!ctrl.data_input_valid['_'+d.doc_id]()"
+			data-ng-bind-html="ctrl.data_input_invalid_html['_'+d.doc_id]()">
+		</div>
+	</div>
+	<div data-ng-if="d.reference2">
+		<div class="w3-btn w3-ripple" data-ng-click="ctrl.read_obj({doc_id:d.reference2})"
+			data-ng-if="!ctrl.elementsMap[d.reference2]">Відкрити
+			{{d.reference2}}
+			</div>
+		<div class="w3-btn w3-ripple"
+			data-ng-click="ctrl.insert_reference_node2(d, c)"
+			data-ng-if="!ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]]">Додати</div>
+		<div data-ng-repeat="c0 in [ctrl.elementsMap[d.reference2]]">
+			<div class="w3-container w3-border-left"
+				data-ng-repeat="c in [{dt:c0
+			, data_id:ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].doc_id}]"
+				data-ng-include="'/f/c6/data_editor_input.html'"></div>
+		</div>
+
+	</div>
+	<div data-ng-if="d.cnt_child && !d.close"
+		class="w3-container w3-border-left">
+		<div
+			data-ng-repeat="c in [{dt:d, data_id:ctrl.elementsMap[ctrl.elementsMap[c.data_id].cols[d.doc_id]].doc_id}]"
+			data-ng-include="'/f/c6/data_editor_input.html'"></div>
+	</div>
+</div>
