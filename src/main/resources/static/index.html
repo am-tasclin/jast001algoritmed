@@ -15,7 +15,35 @@
 <script src="/f/js/app003.js"></script>
 <script src="/f/index.js"></script>
 
-<body class="w3-container">
-	<div class="w3-border-bottom">hello world!</div>
+<body class="w3-container am-max-width-1">
+	<div class="w3-border-bottom">
+		<div class="w3-right" data-ng-include="'/f/btn-to-login.html'"></div>
+		<span data-ng-repeat="cnf in [{show_title:'no'}]"
+			data-ng-include="'/f/home-link.html'" class="w3-small0 am-b"></span>
+	</div>
+	<div class="w3-border-bottom">
+		<div>Модулі: документообіг, ERP-system</div>
+		<div class="w3-right w3-small">file system design</div>
+		<div>
+			<a href="/f/c4/dm/doc_manager.html?folderId=367547"> <i
+				class="fas fa-folder-open"></i>Папка
+			</a> &nbsp; | <a href="/f/c4/j2c_json_editor.html?jsonId=367548"> <i
+				class="fas fa-file"></i> файл
+			</a> &nbsp; => Моделювання даних 1
+		</div>
+		<div>
+			<a href="/f/c6/eh002.html?doc2doc=367550,367556,367566,368438"> <span
+				data-ng-repeat="edpv in ['value']"
+				data-ng-include="'/f/dev4/fa_ed_protocol.html'"></span> Модель
+			</a> | <a href="/f/c6/eh002.html?doc2doc=367550,367556,367566,368438">
+				<span data-ng-repeat="edpv in ['value']"
+				data-ng-include="'/f/dev4/fa_ed_protocol.html'"></span> Дані
+			</a> &nbsp; => Моделювання даних 2
+			<div class="w3-right w3-small">
+				<a href="https://midnight-commander.org/">MC</a> design
+			</div>
+
+		</div>
+	</div>
 </body>
 </html>
