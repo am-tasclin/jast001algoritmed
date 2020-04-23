@@ -843,7 +843,6 @@ sql_app.SELECT_doc_id = function(){
 	return sql
 }
 
-
 sql_app.INSERT_doc_parent_ref = function(d){
 	var sql = "INSERT INTO doc (doc_id, parent, reference) VALUES (:nextDbId1, :parent, :reference); \n"
 	if(d){
